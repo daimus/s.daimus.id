@@ -53,9 +53,15 @@
             </a>
           </li>
         </ul>
-        <div class="text-xs">
-          <p class="dark:text-gray-50">{{ $t('builtBy') }} <a href="https://daimus.id" target="_blank" class="text-green-600 dark:text-green-400"
-                                  rel="noopener">Daimus Suudi</a></p>
+        <div class="flex justify-center items-center flex-col text-xs w-full">
+          <p class="dark:text-gray-50 max-w-sm md:max-w-lg">
+            {{ $t('builtBy') }}
+            <a href="https://daimus.id" class="text-green-600 dark:text-green-400" rel="noopener">Daimus Suudi</a>
+          </p>
+          <p class="dark:text-gray-50 max-w-sm md:max-w-lg mt-2">
+            <a href="https://github.com/daimus/s.daimus.id" class="text-green-600 dark:text-green-400" rel="noopener">s.daimus.id</a>
+            {{ $t('description') }}
+          </p>
         </div>
       </div>
     </div>
