@@ -1,6 +1,6 @@
 <template>
   <main class="flex px-3 sm:px-0 mb-8">
-    <ul class="w-full md:w-4/5 lg:w-3/6 mx-auto">
+    <ul class="w-full md:w-4/5 lg:w-3/6 mx-4 md:mx-auto">
       <li class="mb-4 relative dark:hover:fill-white" v-for="link in links">
         <a class="relative transition duration-200 font-bold bg-green-500 border-green-500 border-2 hover:bg-transparent py-4 w-100 block text-center text-gray-800 hover:text-green-400 rounded-lg pl-12 md:px-12 z-10 hover:z-0" :href="link.url" :target="link.target" :rel="link.rel">
           <span class="text-3xl absolute left-0 top-0 bottom-0 pl-3 flex items-center">{{ link.icon }}</span>

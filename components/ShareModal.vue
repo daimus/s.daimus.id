@@ -1,10 +1,10 @@
 <template>
-  <div :class="show ? '' : 'hidden'" class="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+  <div :class="show ? '' : 'hidden'" class="relative z-50" aria-labelledby="modal-title" role="dialog" aria-modal="true">
     <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
 
-    <div class="fixed inset-0 z-10 overflow-y-auto">
-      <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-        <div class="relative transform overflow-hidden rounded-lg bg-white dark:bg-gray-800 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+    <div class="fixed inset-0 z-50 overflow-y-auto">
+      <div class="flex min-h-full items-center justify-center p-4 text-center sm:items-center sm:p-0" @click="clickOutside">
+        <div class="relative transform overflow-hidden rounded-lg bg-white dark:bg-gray-800 text-left shadow-xl transition-all w-full max-w-2xl mx-4 sm:mx-8 sm:max-w-lg z-50" @click="clickInside">
           <div class="bg-white px-4 pt-5 pb-4 sm:p-4 sm:pb-2 dark:bg-gray-800">
             <div class="relative">
               <button @click="$emit('hideShareModal')" type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white" data-modal-toggle="crypto-modal">
@@ -13,7 +13,7 @@
               </button>
               <div class="py-4 px-6 rounded-t">
                 <h3 class="text-base font-semibold text-gray-900 lg:text-xl dark:text-white">
-                  Share This Link
+                  {{ $t('shareThisLink') }}
                 </h3>
               </div>
               <div class="px-2">
@@ -57,7 +57,7 @@
                     <div class="border rounded-lg bg-gray-50 hover:bg-gray-100 p-4 cursor-pointer flex justify-between" @click="copyUrl">
                       <input type="text" id="copy-url" class="hidden" :value="$props.url">
                       <p class="line-clamp-1 mr-4">{{ $props.url }}</p>
-                      <span class="block" id="copy-text">Copy</span>
+                      <span class="block" id="copy-text">{{ $t('copy') }}</span>
                     </div>
                   </li>
                 </ul>
@@ -76,21 +76,29 @@ export default {
   props: ['show', 'url'],
   methods: {
     copyUrl(){
+      const langCopyText = this.$t('copy')
+      const langCopiedText = this.$t('copied')
       try {
         const urlToCopy = document.getElementById('copy-url')
         urlToCopy.select()
         urlToCopy.setSelectionRange(0, 99999);
         navigator.clipboard.writeText(urlToCopy.value);
         const copyText = document.getElementById('copy-text')
-        copyText.innerText = 'Copied!'
+        copyText.innerText = langCopiedText
         copyText.classList.add('text-green-500')
         setTimeout(function (){
-          copyText.innerText = 'Copy'
+          copyText.innerText = langCopyText
           copyText.classList.remove('text-green-500')
         }, 1200)
       } catch (err) {
         alert('Oops, unable to copy');
       }
+    },
+    clickOutside(){
+      this.$emit('hideShareModal')
+    },
+    clickInside(e){
+      e.stopPropagation()
     }
   }
 }

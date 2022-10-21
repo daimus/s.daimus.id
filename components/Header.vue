@@ -1,6 +1,6 @@
 <template>
-  <header class="container flex flex-col text-center mx-auto py-10">
-    <div class="w-full md:w-4/6 lg:w-4/6 mx-auto mx-auto">
+  <header class="container flex flex-col text-center mx-auto py-4 md:py-10">
+    <div class="md:w-4/6 lg:w-4/6 mx-6 md:mx-auto">
       <div class="flex justify-between">
         <div>
           <button type="button" @click="$emit('showShareModal', 'https://s.daimus.id')" class="w-12 h-12 rounded-full p-2 text-center items-center hover:bg-gray-700 hover:fill-white">
