@@ -3,6 +3,7 @@ import {useWeb3React} from "@web3-react/core";
 import {parseUnits} from "@ethersproject/units";
 import Icon from "@/components/Icon";
 import {cn} from "@/utils";
+import BigNumber from "bignumber.js";
 
 interface DonateProps {
     setError: any
@@ -21,8 +22,9 @@ const Donate = ({setError}: DonateProps) => {
 
     useEffect(() => {
         getNetworkData()
-        library.provider.on("networkChanged", (newChainId : number) => {
-            getNetworkData(newChainId)
+        library.provider.on("chainChanged", (newChainId : any) => {
+            let x = new BigNumber(newChainId);
+            getNetworkData(x.toNumber())
         })
     }, [])
 
@@ -42,19 +44,20 @@ const Donate = ({setError}: DonateProps) => {
     const donate = async () => {
         try {
             const parsedAmount = parseUnits(amount.toString())
+            const tx = {
+                from: account,
+                to: process.env.NEXT_PUBLIC_WALLET_ADDRESS,
+                gas: '0x76c0',
+                gasPrice: '0x9184e72a000',
+                value: parsedAmount._hex
+            }
+
             const result = await library.provider.request({
                 method: "eth_sendTransaction",
-                params: [
-                    {
-                        from: account,
-                        to: '0x96A8FdE42e9d74bc4EAd67b927265061D5e00987',
-                        gas: '0x76c0',
-                        gasPrice: '0x9184e72a000',
-                        value: parsedAmount._hex
-                    },
-                ]
+                params: [tx]
             })
             setHash(result)
+
             alert("Thank you for donating :)")
         } catch (e: any){
             setError(e.message)
@@ -79,7 +82,7 @@ const Donate = ({setError}: DonateProps) => {
                                 <Icon icon="wallet-alt" className="text-sm" /> <span>{account}</span>
                             </p>
                             <p className="mb-3">
-                                <Icon icon="globe" className="text-sm" /> <span>{network?.name}</span>
+                                <Icon icon="globe" className="text-sm" /> <span>{isLoading ? <Icon icon="loader" className="bx-spin" /> : network?.name}</span>
                             </p>
                             <button type="button" onClick={() => deactivate()} className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-3 py-1 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
                                 Disconnect
@@ -92,14 +95,14 @@ const Donate = ({setError}: DonateProps) => {
                     </button>
                 </div>
             }
-            <p className="text-center font-bold text-4xl mt-3 mb-1 dark:text-gray-50">{amount}</p>
+            <p className="text-center font-bold text-4xl mt-3 mb-1 dark:text-gray-50">{amount} {isLoading ? <Icon icon="loader" className="bx-spin" /> : network?.nativeCurrency?.symbol}</p>
             <div className="relative pt-1">
-                <input type="range" min={0.001} max={10} step={0.001} value={amount} className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700 focus:outline-none focus:ring-0 focus:shadow-none" onChange={(event) => handleAmountChange(event.target.value)}
+                <input type="range" min={0.1} max={10} step={0.1} value={amount} className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700 focus:outline-none focus:ring-0 focus:shadow-none" onChange={(event) => handleAmountChange(event.target.value)}
                 />
             </div>
             <div className="text-center mt-8">
                 <button type="button" className="text-gray-900 bg-gray-100 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 mr-2 mb-2" onClick={donate}>
-                    Donate with {network?.nativeCurrency.name}
+                    Donate with {isLoading ? <Icon icon="loader" className="bx-spin" /> : network?.nativeCurrency?.name}
                 </button>
             </div>
         </>
