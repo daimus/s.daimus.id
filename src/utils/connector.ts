@@ -9,7 +9,7 @@ export const CoinbaseWallet = new WalletLinkConnector({
 });
 
 export const WalletConnect = new WalletConnectConnector({
-    rpc: `https://mainnet.infura.io/v3/${process.env.INFURA_KEY}`,
+    infuraId: process.env.NEXT_PUBLIC_INFURA_KEY,
     bridge: "https://bridge.walletconnect.org",
     qrcode: true,
 });
