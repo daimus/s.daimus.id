@@ -12,8 +12,13 @@ interface ConnectWalletProps {
 const ConnectWallet = ({setError}: ConnectWalletProps) => {
     const { activate, deactivate } = useWeb3React()
     const connect = (connector: AbstractConnector) => {
+        if (connector === Injected){
+            // @ts-ignore
+            if (window?.ethereum === undefined){
+                return window.open("https://metamask.app.link/dapp/s.daimus.id", "_self")
+            }
+        }
         activate(connector, error => {
-            console.log("error >> ", error)
             setError(error.message)
         })
     }
