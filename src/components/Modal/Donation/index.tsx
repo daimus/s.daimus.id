@@ -8,6 +8,10 @@ const Index = (props: { show: boolean; toggleModal: any; }) => {
     const { active, chainId, account } = useWeb3React()
     const [error, setError] = useState<string>()
 
+    useEffect(() => {
+        setError("")
+    }, [active])
+
     return (
         <>
             <div className={`relative z-50 ${!props.show && 'hidden'}`} aria-labelledby="modal-title" role="dialog" aria-modal="true">
@@ -32,10 +36,11 @@ const Index = (props: { show: boolean; toggleModal: any; }) => {
                                     </div>
                                     <div className="px-2 h-96">
                                         <div className="w-full h-full flex justify-start flex-col">
-                                            <div className="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
-                                                role="alert">
-                                                {error}
-                                            </div>
+                                            {
+                                                error && <div className="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                                                    {error}
+                                                </div>
+                                            }
                                             {
                                                 active ? <Donate setError={setError} /> : <ConnectWallet setError={setError} />
                                             }
