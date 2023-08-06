@@ -24,12 +24,12 @@ const Links = () => {
     const links = [{
         id: 1,
         icon: "👨‍💻",
-        title: "Resume and Portfolio",
+        title: "Personal Website",
         link: "https://daimus.id"
     }, {
         id: 2,
         icon: "📲",
-        title: "Contact Me in WhatsApp",
+        title: "WhatsApp",
         link: "https://wa.me/6287773775774"
     }]
     return (
