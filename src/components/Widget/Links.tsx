@@ -2,7 +2,6 @@ import Icon from "@/components/Icon";
 import ShareModal from "@/components/Modal/Share";
 import Link from "next/link";
 import {useState} from "react";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 const Links = () => {
     const [modal, setModal] = useState({
