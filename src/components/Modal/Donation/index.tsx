@@ -31,7 +31,7 @@ const Index = (props: { show: boolean; toggleModal: any; }) => {
                                     </button>
                                     <div className="py-4 px-6 rounded-t">
                                         <h3 className="text-base font-semibold text-gray-900 lg:text-xl dark:text-white">
-                                            Donation
+                                            Choose Your Wallet
                                         </h3>
                                     </div>
                                     <div className="px-2 h-96">
